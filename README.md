@@ -1,30 +1,30 @@
 
 
-* Ruby version
+### Ruby version
 ```
 ruby 2.5.3p105
 ```
 
-* Rails version
+### Rails version
 ```
 Rails 5.2.3
 ```  
 
-* System dependencies
+### System dependencies
 - please insert api_key in application.yml for google pagespeed insight
 
 
-* How to start
+### How to start
 ```
 rails s
 ```
 
-* How to run the test suite
+### How to run the test suite
 ```
 rspec spec/
 ```
 
-* WHat is remaining
+### What is remaining
 - email
 - cron job tasks
 - more robust db like postgres
