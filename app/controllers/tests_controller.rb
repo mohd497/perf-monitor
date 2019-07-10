@@ -21,8 +21,8 @@ class TestsController < ApplicationController
   def create
     @test = Test.new(test_params)
     if @test.save
-      render json: {"ttfb": @test.ttfb,"ttfp": @test.ttfp,"tti": @test.tti,"speed_index": @test.speed_index,"passed": @test.is_passed}, 
-        status: :created, location: @test
+      render json: {"url": @test.url, "ttfb": @test.ttfb,"ttfp": @test.ttfp,"tti": @test.tti,"speed_index": @test.speed_index,"passed": @test.is_passed}.to_json, 
+        status: :created
     else
       render json: @test.errors, status: :unprocessable_entity
     end

@@ -1,24 +1,30 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
 
 * Ruby version
+```
+ruby 2.5.3p105
+```
+
+* Rails version
+```
+Rails 5.2.3
+```  
 
 * System dependencies
+- please insert api_key in application.yml for google pagespeed insight
 
-* Configuration
 
-* Database creation
-
-* Database initialization
+* How to start
+```
+rails s
+```
 
 * How to run the test suite
+```
+rspec spec/
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* WHat is remaining
+- email
+- cron job tasks
+- more robust db like postgres

@@ -25,105 +25,50 @@ require 'rails_helper'
 
 RSpec.describe TestsController, type: :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Test. As you add validations to Test, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:test) {{ url: 'https://facebook.com', max_ttfb: 80, max_tti: 80, max_speed_index: 80, max_ttfp: 80 }}
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # TestsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  describe "GET #index" do
-    it "returns a success response" do
-      test = Test.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).to be_successful
-    end
+  it "should send json response success" do
+    
+    post :create, params: {test: test}
+      expect(response).to be_success
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
-      test = Test.create! valid_attributes
-      get :show, params: {id: test.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
+  it "should not pass with low max settings" do
+    
+    post :create, params: {test: test}
+      expect(JSON.parse(response.body)['passed']).to eq(false)
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Test" do
-        expect {
-          post :create, params: {test: valid_attributes}, session: valid_session
-        }.to change(Test, :count).by(1)
-      end
+  it "should not pass with low max settings" do
+    
+    post :create, params: {test: test}
+      expect(JSON.parse(response.body)['passed']).to eq(false)
+  end 
 
-      it "renders a JSON response with the new test" do
-
-        post :create, params: {test: valid_attributes}, session: valid_session
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(test_url(Test.last))
-      end
-    end
-
-    context "with invalid params" do
-      it "renders a JSON response with errors for the new test" do
-
-        post :create, params: {test: invalid_attributes}, session: valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
-      end
-    end
+  it "should give last result back when fetching" do
+    post :create, params: {test: test}
+    get :show, params: {url: 'https://facebook.com'}
+      expect(JSON.parse(response.body)['max_ttfb']).to eq(80)
+      expect(JSON.parse(response.body)['max_tti']).to eq(80)
+      expect(JSON.parse(response.body)['max_speed_index']).to eq(80)
+      expect(JSON.parse(response.body)['url']).to eq('https://facebook.com')
+      expect(JSON.parse(response.body)['is_passed']).to eq(false)
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+  it "should send back array of results when index" do
+    post :create, params: {test: test}
+    get :index, params: {url: 'https://facebook.com'}
+      expect(JSON.parse(response.body)).to be_an(Array) 
+  end  
 
-      it "updates the requested test" do
-        test = Test.create! valid_attributes
-        put :update, params: {id: test.to_param, test: new_attributes}, session: valid_session
-        test.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the test" do
-        test = Test.create! valid_attributes
-
-        put :update, params: {id: test.to_param, test: valid_attributes}, session: valid_session
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
-      end
-    end
-
-    context "with invalid params" do
-      it "renders a JSON response with errors for the test" do
-        test = Test.create! valid_attributes
-
-        put :update, params: {id: test.to_param, test: invalid_attributes}, session: valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested test" do
-      test = Test.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: test.to_param}, session: valid_session
-      }.to change(Test, :count).by(-1)
-    end
-  end
+  it "should send back array of results with only one created when index" do
+    post :create, params: {test: test}
+    get :index, params: {url: 'https://facebook.com'}
+      expect(JSON.parse(response.body)[0]['max_ttfb']).to eq(80)
+      expect(JSON.parse(response.body)[0]['max_tti']).to eq(80)
+      expect(JSON.parse(response.body)[0]['max_speed_index']).to eq(80)
+      expect(JSON.parse(response.body)[0]['url']).to eq('https://facebook.com')
+      expect(JSON.parse(response.body)[0]['is_passed']).to eq(false)
+  end 
 
 end

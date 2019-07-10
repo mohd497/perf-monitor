@@ -13,6 +13,7 @@ module UrlFetch
 	end
 
 	def self.extract_actual_times (api_res)
+		begin
 		ttfb = api_res['lighthouseResult']['audits']['time-to-first-byte']['displayValue']
 		ttfb = extract_number_from_display_value (ttfb)
 		ttfb = ttfb[0].to_i
@@ -27,6 +28,9 @@ module UrlFetch
 		speed_index = get_result_from_string (speed_index)
 		
 		{ttfb: ttfb, tti: tti, ttfp: ttfb, speed_index: speed_index}
+		rescue
+			{ttfb: 0, tti: 0, ttfp: 0, speed_index: 0}
+		end		
 	end
 
 	def self.get_result_from_string (display_value)

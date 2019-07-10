@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :tests, only: [:create]
+  post 'tests', to: 'tests#create'
   get 'tests/last', to: 'tests#show'
   get 'tests', to: 'tests#index'
   
