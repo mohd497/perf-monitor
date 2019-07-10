@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_10_060848) do
+ActiveRecord::Schema.define(version: 2019_07_10_100110) do
 
   create_table "tests", force: :cascade do |t|
     t.text "url"
@@ -20,6 +20,11 @@ ActiveRecord::Schema.define(version: 2019_07_10_060848) do
     t.integer "max_ttfp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ttfb"
+    t.integer "tti"
+    t.integer "speed_index"
+    t.integer "ttfp"
+    t.boolean "is_passed"
   end
 
 end
