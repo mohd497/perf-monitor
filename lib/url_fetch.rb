@@ -49,10 +49,10 @@ module UrlFetch
 
 	def self.is_passed? (actual_times, test_params)
 		if (test_params[:max_ttfb] < actual_times[:ttfb] || test_params[:max_tti] < actual_times[:tti] || test_params[:max_speed_index] < actual_times[:speed_index] || test_params[:max_ttfp] < actual_times[:ttfp])
-    			false
-    	else
-    			true
-    	end		
+			false
+		else
+			true
+		end		
 	end	
 
 	def self.is_valid? (url)
