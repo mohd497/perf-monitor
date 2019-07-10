@@ -27,4 +27,4 @@ rspec spec/
 ### What is remaining
 - email
 - cron job tasks
-- more robust db like postgres
+- use more robust db like postgres
