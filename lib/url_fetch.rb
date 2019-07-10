@@ -5,11 +5,11 @@ module UrlFetch
 
 	def self.fetch_response (url)
 			url = URI.parse("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=#{url}&key=" + ENV['api_key'])
-    		req = Net::HTTP::Get.new(url.request_uri)
-    		http = Net::HTTP.new(url.host, url.port)
-    		http.use_ssl = (url.scheme == "https")
-    		response = http.request(req)
-    		res_json = JSON.parse(response.body)
+			req = Net::HTTP::Get.new(url.request_uri)
+			http = Net::HTTP.new(url.host, url.port)
+			http.use_ssl = (url.scheme == "https")
+			response = http.request(req)
+			res_json = JSON.parse(response.body)
 	end
 
 	def self.extract_actual_times (api_res)
