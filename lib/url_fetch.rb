@@ -14,20 +14,20 @@ module UrlFetch
 
 	def self.extract_actual_times (api_res)
 		begin
-		ttfb = api_res['lighthouseResult']['audits']['time-to-first-byte']['displayValue']
-		ttfb = extract_number_from_display_value (ttfb)
-		ttfb = ttfb[0].to_i
+			ttfb = api_res['lighthouseResult']['audits']['time-to-first-byte']['displayValue']
+			ttfb = extract_number_from_display_value (ttfb)
+			ttfb = ttfb[0].to_i
 
-		tti = api_res['lighthouseResult']['audits']['interactive']['displayValue']
-		tti = get_result_from_string (tti)
+			tti = api_res['lighthouseResult']['audits']['interactive']['displayValue']
+			tti = get_result_from_string (tti)
 
-		ttfp = api_res['lighthouseResult']['audits']['first-meaningful-paint']['displayValue']
-		ttfp = get_result_from_string (ttfp)
+			ttfp = api_res['lighthouseResult']['audits']['first-meaningful-paint']['displayValue']
+			ttfp = get_result_from_string (ttfp)
 
-		speed_index = api_res['lighthouseResult']['audits']['speed-index']['displayValue']
-		speed_index = get_result_from_string (speed_index)
+			speed_index = api_res['lighthouseResult']['audits']['speed-index']['displayValue']
+			speed_index = get_result_from_string (speed_index)
 		
-		{ttfb: ttfb, tti: tti, ttfp: ttfb, speed_index: speed_index}
+			{ttfb: ttfb, tti: tti, ttfp: ttfb, speed_index: speed_index}
 		rescue
 			{ttfb: 0, tti: 0, ttfp: 0, speed_index: 0}
 		end		
@@ -49,13 +49,13 @@ module UrlFetch
 
 	def self.is_passed? (actual_times, test_params)
 		if (test_params[:max_ttfb] < actual_times[:ttfb] || test_params[:max_tti] < actual_times[:tti] || test_params[:max_speed_index] < actual_times[:speed_index] || test_params[:max_ttfp] < actual_times[:ttfp])
-    		false
+    			false
     	else
-    		true
+    			true
     	end		
 	end	
 
 	def self.is_valid? (url)
-    	url =~ HTTP_REGEX
+		url =~ HTTP_REGEX
 	end
 end	
